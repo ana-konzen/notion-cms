@@ -1,5 +1,5 @@
-import RichText from "@/app/layout/components/base/RichText";
-import BlockChild from "@/app/layout/components/base/BlockChild";
+import RichText from "@/notion/layout/components/base/RichText";
+import BlockChild from "@/notion/layout/components/base/BlockChild";
 import {
   RichTextItemResponse,
   BlockObjectResponse,

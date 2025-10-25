@@ -1,7 +1,7 @@
 import { getToc } from "@/notion/notion";
 import type { TocItem } from "@/notion/types";
 
-import ToggleBlock from "@/app/layout/nav/ToggleBlock";
+import ToggleBlock from "@/app/nav/ToggleBlock";
 import Link from "next/link";
 
 export default async function NavBar() {

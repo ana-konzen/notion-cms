@@ -1,5 +1,5 @@
 import { Nunito } from "next/font/google";
-import NavBar from "@/app/layout/nav/NavBar";
+import NavBar from "@/app/nav/NavBar";
 
 import "./globals.css";
 

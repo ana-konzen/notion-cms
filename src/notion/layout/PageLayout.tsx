@@ -1,5 +1,5 @@
-import PageTitle from "@/app/layout/components/base/PageTitle";
-import BlockChild from "@/app/layout/components/base/BlockChild";
+import PageTitle from "@/notion/layout/components/base/PageTitle";
+import BlockChild from "@/notion/layout/components/base/BlockChild";
 
 import { getPageContent, getPageTitle } from "@/notion/notion";
 

@@ -1,7 +1,7 @@
 "use client";
 import classNames from "classnames";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
-import { TocChild } from "@/notion/notion";
+import { TocChild } from "@/notion/types";
 import Link from "next/link";
 
 import { useState } from "react";

@@ -1,4 +1,4 @@
-import RichText from "@/app/layout/components/base/RichText";
+import RichText from "@/notion/layout/components/base/RichText";
 import {
   RichTextItemResponse,
   BlockObjectResponse,

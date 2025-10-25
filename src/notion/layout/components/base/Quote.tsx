@@ -1,7 +1,7 @@
-import RichText from "@/app/layout/components/base/RichText";
+import RichText from "@/notion/layout/components/base/RichText";
 import { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 
-export default function Paragraph({
+export default function Quote({
   text,
   style,
 }: {
@@ -9,8 +9,8 @@ export default function Paragraph({
   style: string;
 }) {
   return (
-    <p className={style}>
+    <div className={style}>
       <RichText richText={text} />
-    </p>
+    </div>
   );
 }

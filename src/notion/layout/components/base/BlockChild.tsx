@@ -1,26 +1,9 @@
-import Paragraph from "@/app/layout/components/base/Paragraph";
-import Header1 from "@/app/layout/components/base/Header1";
-import Header2 from "@/app/layout/components/base/Header2";
-import Header3 from "@/app/layout/components/base/Header3";
-import Callout from "@/app/layout/components/base/Callout";
-import Quote from "@/app/layout/components/base/Quote";
-import Table from "@/app/layout/components/base/Table";
-import CustomComponent from "@/app/layout/components/custom/CustomComponent";
 import { CustomBlock } from "@/notion/types";
 import { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 import { notionConfig } from "@/notion/config";
 import { styles } from "@/notion/styles";
 
-const componentDict = {
-  paragraph: Paragraph,
-  heading_1: Header1,
-  heading_2: Header2,
-  heading_3: Header3,
-  table: Table,
-  callout: Callout,
-  quote: Quote,
-  CustomComponent,
-};
+import { componentDict } from "@/notion/compDict";
 
 export default function BlockChild({ block }: { block: CustomBlock }) {
   // Handle special "callout" blocks based on their first rich text content.

@@ -5,7 +5,7 @@ import { Client } from "@notionhq/client";
 
 import { notionConfig } from "@/notion/config";
 
-import { createSlug } from "@/util";
+import { createSlug } from "@/notion/util";
 
 import type { Id, CustomBlock, TocChild, TocItem } from "@/notion/types";
 

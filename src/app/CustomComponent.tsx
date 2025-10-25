@@ -1,4 +1,4 @@
-import BlockChild from "@/app/layout/components/base/BlockChild";
+import BlockChild from "@/notion/layout/components/base/BlockChild";
 import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 export default function CustomComponent({
