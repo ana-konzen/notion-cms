@@ -1,19 +1,13 @@
 import { getToc } from "@/notion/notion";
 import type { TocItem } from "@/notion/types";
 
-import ToggleBlock from "@/app/nav/ToggleBlock";
-import Link from "next/link";
+import ToggleBlock from "@/notion/layout/components/nav/ToggleBlock";
 
 export default async function NavBar() {
   const toc = await getToc();
   return (
-    <div className="z-10 hidden border-r border-r-gray md:block h-screen fixed p-4 w-64">
-      <Link href="/">
-        <h1 className="font-bold mb-4">Notion Example</h1>
-      </Link>
-      <div className="flex flex-col">
-        <Toc content={toc} />
-      </div>
+    <div className="flex flex-col">
+      <Toc content={toc} />
     </div>
   );
 }
@@ -22,6 +16,18 @@ function Toc({ content }: { content: TocItem[] }) {
   return (
     <>
       {content.map((block) => {
+        if (block.type === "page") {
+          return (
+            <div key={block.id} className="mb-2">
+              <a
+                href={`/${block.slug}`}
+                className="text-sm text-gray hover:text-gray-800"
+              >
+                {block.title}
+              </a>
+            </div>
+          );
+        }
         return (
           <ToggleBlock
             key={block.id}

@@ -1,7 +1,7 @@
 import { CustomBlock } from "@/notion/types";
 import { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 import { notionConfig } from "@/notion/config";
-import { styles } from "@/notion/styles";
+import { classes } from "@/notion/classes";
 
 import { componentDict } from "@/notion/compDict";
 
@@ -22,7 +22,7 @@ export default function BlockChild({ block }: { block: CustomBlock }) {
             text={block.callout.rich_text as RichTextItemResponse[]}
             block={block}
             blockChildren={block.children}
-            style={""}
+            className={""}
           />
         );
       }
@@ -47,7 +47,7 @@ export default function BlockChild({ block }: { block: CustomBlock }) {
         }
         block={block}
         blockChildren={block.children}
-        style={styles[block.type as keyof typeof styles]}
+        className={classes[block.type as keyof typeof classes]}
       />
     );
   }

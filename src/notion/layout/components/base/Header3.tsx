@@ -2,13 +2,13 @@ import { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 
 export default function Header3({
   text,
-  style,
+  className,
 }: {
   text: RichTextItemResponse[];
-  style: string;
+  className: string;
 }) {
   return (
-    <h3 className={style}>
+    <h3 className={className}>
       {text
         .filter((item) => item.annotations.color !== "gray")
         .map((item) => item.plain_text)}

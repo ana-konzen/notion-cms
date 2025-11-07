@@ -9,19 +9,19 @@ export default function Callout({
   text,
   block,
   blockChildren,
-  style,
+  className,
 }: {
   text: RichTextItemResponse[];
   block: BlockObjectResponse;
   blockChildren: BlockObjectResponse[] | undefined;
-  style: string;
+  className: string;
 }) {
   if (block.type !== "callout") return null;
   const emoji =
     block.callout.icon?.type === "emoji" ? block.callout.icon.emoji : null;
 
   return (
-    <div className={style}>
+    <div className={className}>
       <div className="mr-4 text-xl">{emoji}</div>
       <div>
         <RichText richText={text} />

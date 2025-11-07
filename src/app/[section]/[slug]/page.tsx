@@ -9,6 +9,10 @@ export async function generateStaticParams() {
   const pageParams: { section: string; slug: string }[] = [];
 
   toc.forEach((block) => {
+    if (block.type === "page") {
+      pageParams.push({ section: "", slug: block.slug });
+      return;
+    }
     block.children.map((child) => {
       pageParams.push({ section: block.slug, slug: child.slug });
     });
@@ -25,7 +29,7 @@ export default async function Page({
   const pageParams = await params;
   const contentParams = await getContentParams();
   const foundParam = contentParams.find(
-    (param) => param.slug === pageParams.slug
+    (param) => param?.slug === pageParams.slug
   );
   if (!foundParam) {
     notFound();

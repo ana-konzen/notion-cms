@@ -16,7 +16,7 @@ export const componentDict = {
   quote: Quote,
 };
 
-export function addComponents(newComponents: {
+export function addComponent(newComponents: {
   [key: string]: React.ComponentType<never>;
 }) {
   Object.assign(componentDict, newComponents);

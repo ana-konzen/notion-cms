@@ -3,13 +3,13 @@ import { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 
 export default function Quote({
   text,
-  style,
+  className,
 }: {
   text: RichTextItemResponse[];
-  style: string;
+  className: string;
 }) {
   return (
-    <div className={style}>
+    <div className={className}>
       <RichText richText={text} />
     </div>
   );

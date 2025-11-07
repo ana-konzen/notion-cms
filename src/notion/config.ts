@@ -1,5 +1,44 @@
 export const notionConfig = {
-  homePageId: "2975ddb24d8a80488119c7600e19d8f3",
-  tocId: "2975ddb24d8a80dcb9c1ef9bd0b2f033",
+  homePageId: "",
+  tocId: "",
   customMarker: ["<", ">"], // Symbol to identify custom components in callouts
+  add: function ({
+    homePageId,
+    tocId,
+    customMarker,
+  }: {
+    homePageId?: string;
+    tocId?: string;
+    customMarker?: [string, string];
+  }) {
+    if (homePageId) {
+      this.homePageId = homePageId;
+    }
+    if (tocId) {
+      this.tocId = tocId;
+    }
+    if (customMarker) {
+      this.customMarker = customMarker;
+    }
+  },
 };
+
+// export function configNotion({
+//   homePageId,
+//   tocId,
+//   customMarker,
+// }: {
+//   homePageId?: string;
+//   tocId?: string;
+//   customMarker?: [string, string];
+// }) {
+//   if (homePageId) {
+//     notionConfig.homePageId = homePageId;
+//   }
+//   if (tocId) {
+//     notionConfig.tocId = tocId;
+//   }
+//   if (customMarker) {
+//     notionConfig.customMarker = customMarker;
+//   }
+// }

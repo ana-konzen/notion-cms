@@ -8,11 +8,11 @@ import {
 export default function Table({
   block,
   blockChildren,
-  style,
+  className,
 }: {
   block: BlockObjectResponse;
   blockChildren: BlockObjectResponse[] | undefined;
-  style: string;
+  className: string;
 }) {
   if (!blockChildren || block.type !== "table") return null;
   const table = block.table;
@@ -26,7 +26,7 @@ export default function Table({
   }
 
   return (
-    <table className={style}>
+    <table className={className}>
       {headerRow && (
         <thead className="border-b font-bold border-gray">
           <Row row={headerRow as TableRowBlockObjectResponse} />

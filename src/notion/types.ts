@@ -6,17 +6,28 @@ export type CustomBlock = BlockObjectResponse & {
   children?: BlockObjectResponse[];
 };
 
-export interface TocItem {
+interface TocItemLayout {
   id: string;
   title: string;
   slug: string;
-  children: TocChild[];
+}
+
+export interface TocPage extends TocItemLayout {
+  page_id: string; // the id of the page the block links to
+  type: "page";
 }
 
-//TocLink
-export interface TocChild {
-  id: string;
-  page_id: string; // the id of the page the block links to
-  title: string;
-  slug: string;
+export interface TocToggle extends TocItemLayout {
+  children: TocPage[];
+  type: "toggle";
 }
+
+export type TocItem = TocPage | TocToggle;
+
+// //TocLink
+// export interface TocChild {
+//   id: string;
+//   page_id: string; // the id of the page the block links to
+//   title: string;
+//   slug: string;
+// }

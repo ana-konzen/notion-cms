@@ -3,13 +3,13 @@ import { RichTextItemResponse } from "@notionhq/client/build/src/api-endpoints";
 
 export default function Paragraph({
   text,
-  style,
+  className,
 }: {
   text: RichTextItemResponse[];
-  style: string;
+  className: string;
 }) {
   return (
-    <p className={style}>
+    <p className={className}>
       <RichText richText={text} />
     </p>
   );

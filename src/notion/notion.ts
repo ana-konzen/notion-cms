@@ -7,7 +7,13 @@ import { notionConfig } from "@/notion/config";
 
 import { createSlug } from "@/notion/util";
 
-import type { Id, CustomBlock, TocChild, TocItem } from "@/notion/types";
+import type {
+  Id,
+  CustomBlock,
+  TocItem,
+  TocPage,
+  TocToggle,
+} from "@/notion/types";
 
 // import types from notion
 import type {
@@ -92,55 +98,99 @@ export async function getToc(): Promise<TocItem[]> {
   const toc: TocItem[] = [];
 
   for (const block of blocks) {
-    // ignore sections without content
-    if (!block.has_children) continue;
-    // only pay attention to "toggle" blocks
-    if (block.type !== "toggle") continue;
+    const tocItem =
+      block.type === "toggle"
+        ? await getTocToggle(block)
+        : block.type === "link_to_page"
+        ? await getTocPage(block)
+        : undefined;
 
-    // prepare the children of the block
-    const blockChildren = await getBlockChildren(block.id);
-    const children: TocChild[] = [];
-    for (const child of blockChildren) {
-      // ignore everything but page links
-      if (child.type !== "link_to_page") continue;
-      // link_to_pages can link to pages or databases, we only want pages
-      if (child.link_to_page.type !== "page_id") continue;
-
-      // load the title of the linked page + build the TOC child
-      const childTitle = await getPageTitle(child.link_to_page.page_id);
-      children.push({
-        id: child.id,
-        title: childTitle,
-        slug: createSlug(childTitle),
-        page_id: child.link_to_page.page_id,
-      });
-    }
-
-    // create the TOC item and add it
-    toc.push({
-      title: block.toggle.rich_text[0].plain_text,
-      slug: createSlug(block.toggle.rich_text[0].plain_text),
-      id: block.id,
-      children: children,
-    });
+    if (!tocItem) continue;
+    toc.push(tocItem);
   }
 
   return toc;
 }
 
+async function getTocPage(
+  block: BlockObjectResponse
+): Promise<TocPage | undefined> {
+  // ignore everything but page links
+  if (block.type !== "link_to_page") return;
+  // link_to_pages can link to pages or databases, we only want pages
+  if (block.link_to_page.type !== "page_id") return;
+
+  // load the title of the linked page + build the TOC item
+  const pageTitle = await getPageTitle(block.link_to_page.page_id);
+  return {
+    id: block.id,
+    title: pageTitle,
+    slug: createSlug(pageTitle),
+    page_id: block.link_to_page.page_id,
+    type: "page",
+  };
+}
+
+async function getTocToggle(
+  block: BlockObjectResponse
+): Promise<TocToggle | undefined> {
+  // only pay attention to "toggle" blocks
+  if (block.type !== "toggle") return;
+
+  // ignore sections without content
+  if (!block.has_children) return;
+
+  // prepare the children of the block
+  const blockChildren = await getBlockChildren(block.id);
+  const children: TocPage[] = [];
+  for (const child of blockChildren) {
+    const childTocItem = await getTocPage(child);
+    children.push(childTocItem!);
+  }
+
+  return {
+    title: block.toggle.rich_text[0].plain_text,
+    slug: createSlug(block.toggle.rich_text[0].plain_text),
+    id: block.id,
+    children: children,
+    type: "toggle",
+  };
+}
+
 export async function getContentParams() {
   const toc = await getToc();
 
-  return toc.flatMap((block) =>
-    block.children
-      ? block.children.map((child) => {
-          return {
-            parent_slug: block.slug,
-            page_id: child.page_id,
-            title: child.title,
-            slug: child.slug,
-          };
-        })
-      : []
-  );
+  return toc.flatMap((block) => {
+    if (block.type === "page") {
+      return {
+        page_id: (block as TocPage).page_id,
+        title: block.title,
+        slug: block.slug,
+        hasParent: false,
+        parent_slug: "",
+      };
+    }
+    if (block.type === "toggle") {
+      return (block as TocToggle).children.map((child) => {
+        return {
+          parent_slug: block.slug,
+          page_id: child.page_id,
+          title: child.title,
+          slug: child.slug,
+          hasParent: true,
+        };
+      });
+    }
+
+    // "children" in block
+    //   ? block.children.map((child) => {
+    //       return {
+    //         parent_slug: block.slug,
+    //         page_id: child.page_id,
+    //         title: child.title,
+    //         slug: child.slug,
+    //       };
+    //     })
+    //   : []
+  });
 }
