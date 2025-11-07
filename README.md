@@ -12,6 +12,8 @@ You can access the Notion page used to make the website
 And the table of contents
 [here](https://www.notion.so/Table-of-Contents-2975ddb24d8a80dcb9c1ef9bd0b2f033).
 
+The example website is deployed [here](https://notion-cms-roan.vercel.app/).
+
 ## Features
 
 Currently, only tables, callouts, and blockquotes are supported. I'm adding
